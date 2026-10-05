@@ -1,0 +1,493 @@
+2026-10-05 14:32:58,394 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,402 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/articles "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,406 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,409 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/articles?status=pending "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,413 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,416 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/articles/generate "HTTP/1.1 400 Bad Request"
+2026-10-05 14:32:58,433 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,434 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/articles/generate "HTTP/1.1 400 Bad Request"
+2026-10-05 14:32:58,438 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,440 - app.services.keyword_service - INFO - create:51 - 已添加关键词: 测试关键词
+2026-10-05 14:32:58,441 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/keywords "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,442 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/articles/generate "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,442 - app.services.generation_task - ERROR - _generation_worker:184 - 生成任务失败: (sqlite3.OperationalError) no such table: keyword
+[SQL: SELECT keyword.id AS keyword_id, keyword.keyword AS keyword_keyword, keyword.created_at AS keyword_created_at 
+FROM keyword]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such table: keyword
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/work/app/services/generation_task.py", line 106, in _generation_worker
+    all_keywords = KeywordService.get_all_keywords(db) if not keywords else keywords
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/app/services/keyword_service.py", line 103, in get_all_keywords
+    keywords = db.query(Keyword).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2673, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2827, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 2362, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 2247, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/orm/context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 515, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1640, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: keyword
+[SQL: SELECT keyword.id AS keyword_id, keyword.keyword AS keyword_keyword, keyword.created_at AS keyword_created_at 
+FROM keyword]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-10-05 14:32:58,449 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,452 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/articles/1 "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,456 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,458 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/articles/99999 "HTTP/1.1 404 Not Found"
+2026-10-05 14:32:58,461 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,464 - app.services.article_service - INFO - update_article:312 - 已更新文章: 1
+2026-10-05 14:32:58,465 - httpx - INFO - _send_single_request:1038 - HTTP Request: PUT http://testserver/api/articles/1 "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,468 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,471 - app.services.article_service - INFO - delete_article:299 - 已删除文章: 1
+2026-10-05 14:32:58,471 - httpx - INFO - _send_single_request:1038 - HTTP Request: DELETE http://testserver/api/articles/1 "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,472 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/articles/1 "HTTP/1.1 404 Not Found"
+2026-10-05 14:32:58,476 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,478 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/articles/generation-config "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,482 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,484 - app.services.article_service - INFO - update_generation_config:288 - 已更新生成配置: count=5, publish_count=1, frequency=2hour
+2026-10-05 14:32:58,484 - httpx - INFO - _send_single_request:1038 - HTTP Request: PUT http://testserver/api/articles/generation-config "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,486 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/articles/generation-config "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,490 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,491 - httpx - INFO - _send_single_request:1038 - HTTP Request: PUT http://testserver/api/articles/generation-config "HTTP/1.1 400 Bad Request"
+2026-10-05 14:32:58,495 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,495 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/articles/scheduled-publish/status "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,499 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,503 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/cms/config "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,507 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,509 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/cms/config "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,510 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/cms/config "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,514 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,517 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/cms/config "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,518 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/cms/config "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,519 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/cms/config/1 "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,523 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,525 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/cms/config "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,527 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/cms/config "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,528 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/cms/config "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,531 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,533 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/cms/config "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,534 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/cms/config "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,536 - httpx - INFO - _send_single_request:1038 - HTTP Request: DELETE http://testserver/api/cms/config/1 "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,537 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/cms/config "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,540 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,542 - httpx - INFO - _send_single_request:1038 - HTTP Request: DELETE http://testserver/api/cms/config/99999 "HTTP/1.1 404 Not Found"
+2026-10-05 14:32:58,546 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,548 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/cms/config "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,549 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/cms/config "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,553 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,555 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/config/deepseek "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,559 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,561 - httpx - INFO - _send_single_request:1038 - HTTP Request: PUT http://testserver/api/config/deepseek "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,565 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,567 - httpx - INFO - _send_single_request:1038 - HTTP Request: PUT http://testserver/api/config/deepseek "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,571 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,572 - app.services.keyword_service - INFO - create:51 - 已添加关键词: SEO优化
+2026-10-05 14:32:58,572 - app.services.keyword_service - INFO - create:51 - 已添加关键词: 网站建设
+2026-10-05 14:32:58,572 - app.services.keyword_service - INFO - create:51 - 已添加关键词: 数字营销
+2026-10-05 14:32:58,573 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/keywords "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,577 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,578 - app.services.keyword_service - INFO - create:51 - 已添加关键词: SEO优化
+2026-10-05 14:32:58,579 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/keywords "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,579 - app.services.keyword_service - INFO - create:51 - 已添加关键词: 新关键词
+2026-10-05 14:32:58,580 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/keywords "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,583 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,584 - app.services.keyword_service - INFO - create:51 - 已添加关键词: 关键词1
+2026-10-05 14:32:58,585 - app.services.keyword_service - INFO - create:51 - 已添加关键词: 关键词2
+2026-10-05 14:32:58,585 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/keywords "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,586 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/keywords "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,590 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,591 - app.services.keyword_service - INFO - create:51 - 已添加关键词: 测试关键词
+2026-10-05 14:32:58,592 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/keywords "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,593 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/keywords "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,594 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/keywords/1 "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,597 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,599 - app.services.keyword_service - INFO - create:51 - 已添加关键词: 原关键词
+2026-10-05 14:32:58,599 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/keywords "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,600 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/keywords "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,601 - app.services.keyword_service - INFO - update:96 - 已更新关键词: 1
+2026-10-05 14:32:58,602 - httpx - INFO - _send_single_request:1038 - HTTP Request: PUT http://testserver/api/keywords/1 "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,606 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,607 - app.services.keyword_service - INFO - create:51 - 已添加关键词: 待删除
+2026-10-05 14:32:58,608 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/keywords "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,608 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/keywords "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,609 - app.services.keyword_service - INFO - delete:85 - 已删除关键词: 1
+2026-10-05 14:32:58,610 - httpx - INFO - _send_single_request:1038 - HTTP Request: DELETE http://testserver/api/keywords/1 "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,610 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/keywords "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,614 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,616 - httpx - INFO - _send_single_request:1038 - HTTP Request: DELETE http://testserver/api/keywords/99999 "HTTP/1.1 404 Not Found"
+2026-10-05 14:32:58,620 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,622 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/knowledge-base/list "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,625 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,627 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/knowledge-base/scan "HTTP/1.1 400 Bad Request"
+2026-10-05 14:32:58,630 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,631 - app.services.knowledge_base_service - INFO - _scan_worker:53 - 开始扫描文件夹: /tmp/tmpesj71_jc
+2026-10-05 14:32:58,632 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/knowledge-base/scan "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,632 - app.services.knowledge_base_service - ERROR - _scan_worker:121 - 扫描任务失败: [Errno 2] No such file or directory: '/tmp/tmpesj71_jc'
+2026-10-05 14:32:58,638 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,639 - app.services.knowledge_base_service - INFO - _scan_worker:53 - 开始扫描文件夹: /tmp/tmpe13o_pa0
+2026-10-05 14:32:58,641 - app.services.knowledge_base_service - ERROR - _scan_worker:103 - 处理文件失败 /tmp/tmpe13o_pa0/test.txt: (sqlite3.OperationalError) no such table: knowledge_base
+[SQL: SELECT knowledge_base.id AS knowledge_base_id, knowledge_base.file_path AS knowledge_base_file_path, knowledge_base.file_type AS knowledge_base_file_type, knowledge_base.content AS knowledge_base_content, knowledge_base.created_at AS knowledge_base_created_at 
+FROM knowledge_base 
+WHERE knowledge_base.file_path = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('/tmp/tmpe13o_pa0/test.txt', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-10-05 14:32:58,641 - app.services.knowledge_base_service - INFO - _scan_worker:118 - 扫描任务完成: a0a6339b
+2026-10-05 14:32:58,639 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/knowledge-base/scan "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,641 - app.services.knowledge_base_service - INFO - _scan_worker:53 - 开始扫描文件夹: /tmp/tmpe13o_pa0
+2026-10-05 14:32:58,641 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/knowledge-base/scan "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,642 - app.services.knowledge_base_service - ERROR - _scan_worker:103 - 处理文件失败 /tmp/tmpe13o_pa0/test.txt: (sqlite3.OperationalError) no such table: knowledge_base
+[SQL: SELECT knowledge_base.id AS knowledge_base_id, knowledge_base.file_path AS knowledge_base_file_path, knowledge_base.file_type AS knowledge_base_file_type, knowledge_base.content AS knowledge_base_content, knowledge_base.created_at AS knowledge_base_created_at 
+FROM knowledge_base 
+WHERE knowledge_base.file_path = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('/tmp/tmpe13o_pa0/test.txt', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-10-05 14:32:58,642 - app.services.knowledge_base_service - INFO - _scan_worker:118 - 扫描任务完成: 615cd125
+2026-10-05 14:32:58,647 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,648 - app.services.knowledge_base_service - INFO - _scan_worker:53 - 开始扫描文件夹: /tmp/tmpywrg9jjk
+2026-10-05 14:32:58,648 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/knowledge-base/scan "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,650 - app.services.knowledge_base_service - ERROR - _scan_worker:103 - 处理文件失败 /tmp/tmpywrg9jjk/test.txt: (sqlite3.OperationalError) no such table: knowledge_base
+[SQL: SELECT knowledge_base.id AS knowledge_base_id, knowledge_base.file_path AS knowledge_base_file_path, knowledge_base.file_type AS knowledge_base_file_type, knowledge_base.content AS knowledge_base_content, knowledge_base.created_at AS knowledge_base_created_at 
+FROM knowledge_base 
+WHERE knowledge_base.file_path = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('/tmp/tmpywrg9jjk/test.txt', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-10-05 14:32:58,650 - app.services.knowledge_base_service - INFO - _scan_worker:118 - 扫描任务完成: 2cbc236f
+2026-10-05 14:32:58,650 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/knowledge-base/list "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,656 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,657 - app.services.knowledge_base_service - INFO - _scan_worker:53 - 开始扫描文件夹: /tmp/tmprcdl0vdc
+2026-10-05 14:32:58,657 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/knowledge-base/scan "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,659 - app.services.knowledge_base_service - ERROR - _scan_worker:103 - 处理文件失败 /tmp/tmprcdl0vdc/test.txt: (sqlite3.OperationalError) no such table: knowledge_base
+[SQL: SELECT knowledge_base.id AS knowledge_base_id, knowledge_base.file_path AS knowledge_base_file_path, knowledge_base.file_type AS knowledge_base_file_type, knowledge_base.content AS knowledge_base_content, knowledge_base.created_at AS knowledge_base_created_at 
+FROM knowledge_base 
+WHERE knowledge_base.file_path = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('/tmp/tmprcdl0vdc/test.txt', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-10-05 14:32:58,659 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/knowledge-base/list "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,659 - app.services.knowledge_base_service - INFO - _scan_worker:118 - 扫描任务完成: 59c7f84a
+2026-10-05 14:32:58,665 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,666 - app.services.knowledge_base_service - INFO - _scan_worker:53 - 开始扫描文件夹: /tmp/tmpb_r0_mob
+2026-10-05 14:32:58,666 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/knowledge-base/scan "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,667 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/knowledge-base/list "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,669 - app.services.knowledge_base_service - ERROR - _scan_worker:121 - 扫描任务失败: [Errno 2] No such file or directory: '/tmp/tmpb_r0_mob'
+2026-10-05 14:32:58,673 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,674 - httpx - INFO - _send_single_request:1038 - HTTP Request: DELETE http://testserver/api/knowledge-base/99999 "HTTP/1.1 404 Not Found"
+2026-10-05 14:32:58,678 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,680 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/logs "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,684 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,685 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/logs?article_id=1 "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,690 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,693 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/logs/1 "HTTP/1.1 200 OK"
+2026-10-05 14:32:58,697 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:32:58,698 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/logs/99999 "HTTP/1.1 404 Not Found"
+2026-10-05 14:34:41,671 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,680 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/articles "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,684 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,687 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/articles?status=pending "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,691 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,694 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/articles/generate "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,694 - app.services.generation_task - ERROR - _generation_worker:184 - 生成任务失败: (sqlite3.OperationalError) no such table: keyword
+[SQL: SELECT keyword.id AS keyword_id, keyword.keyword AS keyword_keyword, keyword.created_at AS keyword_created_at 
+FROM keyword]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such table: keyword
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/work/app/services/generation_task.py", line 106, in _generation_worker
+    all_keywords = KeywordService.get_all_keywords(db) if not keywords else keywords
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/app/services/keyword_service.py", line 103, in get_all_keywords
+    keywords = db.query(Keyword).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2673, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2827, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 2362, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 2247, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/orm/context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 515, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1640, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: keyword
+[SQL: SELECT keyword.id AS keyword_id, keyword.keyword AS keyword_keyword, keyword.created_at AS keyword_created_at 
+FROM keyword]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-10-05 14:34:41,700 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,701 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/articles/generate "HTTP/1.1 400 Bad Request"
+2026-10-05 14:34:41,705 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,707 - app.services.keyword_service - INFO - create:51 - 已添加关键词: 测试关键词
+2026-10-05 14:34:41,708 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/keywords "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,709 - app.services.generation_task - ERROR - _generation_worker:184 - 生成任务失败: (sqlite3.OperationalError) no such table: keyword
+[SQL: SELECT keyword.id AS keyword_id, keyword.keyword AS keyword_keyword, keyword.created_at AS keyword_created_at 
+FROM keyword]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Traceback (most recent call last):
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such table: keyword
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/work/app/services/generation_task.py", line 106, in _generation_worker
+    all_keywords = KeywordService.get_all_keywords(db) if not keywords else keywords
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/app/services/keyword_service.py", line 103, in get_all_keywords
+    keywords = db.query(Keyword).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2673, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 2827, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 2362, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 2247, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/orm/context.py", line 305, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 515, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1640, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/tmp/venv/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: keyword
+[SQL: SELECT keyword.id AS keyword_id, keyword.keyword AS keyword_keyword, keyword.created_at AS keyword_created_at 
+FROM keyword]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-10-05 14:34:41,710 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/articles/generate "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,714 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,717 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/articles/1 "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,721 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,722 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/articles/99999 "HTTP/1.1 404 Not Found"
+2026-10-05 14:34:41,726 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,729 - app.services.article_service - INFO - update_article:312 - 已更新文章: 1
+2026-10-05 14:34:41,729 - httpx - INFO - _send_single_request:1038 - HTTP Request: PUT http://testserver/api/articles/1 "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,733 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,736 - app.services.article_service - INFO - delete_article:299 - 已删除文章: 1
+2026-10-05 14:34:41,736 - httpx - INFO - _send_single_request:1038 - HTTP Request: DELETE http://testserver/api/articles/1 "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,737 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/articles/1 "HTTP/1.1 404 Not Found"
+2026-10-05 14:34:41,741 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,743 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/articles/generation-config "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,746 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,749 - app.services.article_service - INFO - update_generation_config:288 - 已更新生成配置: count=5, publish_count=1, frequency=2hour
+2026-10-05 14:34:41,749 - httpx - INFO - _send_single_request:1038 - HTTP Request: PUT http://testserver/api/articles/generation-config "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,751 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/articles/generation-config "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,754 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,755 - httpx - INFO - _send_single_request:1038 - HTTP Request: PUT http://testserver/api/articles/generation-config "HTTP/1.1 400 Bad Request"
+2026-10-05 14:34:41,759 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,759 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/articles/scheduled-publish/status "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,763 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,768 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/cms/config "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,772 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,774 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/cms/config "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,775 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/cms/config "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,779 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,781 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/cms/config "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,782 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/cms/config "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,783 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/cms/config/1 "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,786 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,788 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/cms/config "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,790 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/cms/config "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,791 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/cms/config "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,794 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,796 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/cms/config "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,797 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/cms/config "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,799 - httpx - INFO - _send_single_request:1038 - HTTP Request: DELETE http://testserver/api/cms/config/1 "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,799 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/cms/config "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,803 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,805 - httpx - INFO - _send_single_request:1038 - HTTP Request: DELETE http://testserver/api/cms/config/99999 "HTTP/1.1 404 Not Found"
+2026-10-05 14:34:41,808 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,810 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/cms/config "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,811 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/cms/config "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,815 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,816 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/config/deepseek "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,820 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,823 - httpx - INFO - _send_single_request:1038 - HTTP Request: PUT http://testserver/api/config/deepseek "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,826 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,828 - httpx - INFO - _send_single_request:1038 - HTTP Request: PUT http://testserver/api/config/deepseek "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,832 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,833 - app.services.keyword_service - INFO - create:51 - 已添加关键词: SEO优化
+2026-10-05 14:34:41,833 - app.services.keyword_service - INFO - create:51 - 已添加关键词: 网站建设
+2026-10-05 14:34:41,833 - app.services.keyword_service - INFO - create:51 - 已添加关键词: 数字营销
+2026-10-05 14:34:41,834 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/keywords "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,838 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,839 - app.services.keyword_service - INFO - create:51 - 已添加关键词: SEO优化
+2026-10-05 14:34:41,840 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/keywords "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,840 - app.services.keyword_service - INFO - create:51 - 已添加关键词: 新关键词
+2026-10-05 14:34:41,841 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/keywords "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,845 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,846 - app.services.keyword_service - INFO - create:51 - 已添加关键词: 关键词1
+2026-10-05 14:34:41,847 - app.services.keyword_service - INFO - create:51 - 已添加关键词: 关键词2
+2026-10-05 14:34:41,847 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/keywords "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,849 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/keywords "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,853 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,854 - app.services.keyword_service - INFO - create:51 - 已添加关键词: 测试关键词
+2026-10-05 14:34:41,854 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/keywords "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,855 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/keywords "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,856 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/keywords/1 "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,860 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,861 - app.services.keyword_service - INFO - create:51 - 已添加关键词: 原关键词
+2026-10-05 14:34:41,862 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/keywords "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,863 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/keywords "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,864 - app.services.keyword_service - INFO - update:96 - 已更新关键词: 1
+2026-10-05 14:34:41,865 - httpx - INFO - _send_single_request:1038 - HTTP Request: PUT http://testserver/api/keywords/1 "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,868 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,870 - app.services.keyword_service - INFO - create:51 - 已添加关键词: 待删除
+2026-10-05 14:34:41,870 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/keywords "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,871 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/keywords "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,872 - app.services.keyword_service - INFO - delete:85 - 已删除关键词: 1
+2026-10-05 14:34:41,872 - httpx - INFO - _send_single_request:1038 - HTTP Request: DELETE http://testserver/api/keywords/1 "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,873 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/keywords "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,876 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,877 - httpx - INFO - _send_single_request:1038 - HTTP Request: DELETE http://testserver/api/keywords/99999 "HTTP/1.1 404 Not Found"
+2026-10-05 14:34:41,881 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,884 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/knowledge-base/list "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,887 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,889 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/knowledge-base/scan "HTTP/1.1 400 Bad Request"
+2026-10-05 14:34:41,892 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,893 - app.services.knowledge_base_service - INFO - scan_folder:150 - 开始扫描文件夹: /tmp/tmp70vwj7nj
+2026-10-05 14:34:41,894 - app.services.knowledge_base_service - INFO - scan_folder:187 - 已处理文件: /tmp/tmp70vwj7nj/test.txt
+2026-10-05 14:34:41,895 - app.services.knowledge_base_service - INFO - scan_folder:202 - 扫描完成: {'total_files': 1, 'processed': 1, 'skipped': 0, 'errors': []}
+2026-10-05 14:34:41,895 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/knowledge-base/scan "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,899 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,900 - app.services.knowledge_base_service - INFO - scan_folder:150 - 开始扫描文件夹: /tmp/tmp2v9r4z7i
+2026-10-05 14:34:41,900 - app.services.knowledge_base_service - INFO - scan_folder:187 - 已处理文件: /tmp/tmp2v9r4z7i/test.txt
+2026-10-05 14:34:41,901 - app.services.knowledge_base_service - INFO - scan_folder:202 - 扫描完成: {'total_files': 1, 'processed': 1, 'skipped': 0, 'errors': []}
+2026-10-05 14:34:41,901 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/knowledge-base/scan "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,901 - app.services.knowledge_base_service - INFO - scan_folder:150 - 开始扫描文件夹: /tmp/tmp2v9r4z7i
+2026-10-05 14:34:41,902 - app.services.knowledge_base_service - INFO - scan_folder:202 - 扫描完成: {'total_files': 1, 'processed': 0, 'skipped': 1, 'errors': []}
+2026-10-05 14:34:41,902 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/knowledge-base/scan "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,906 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,906 - app.services.knowledge_base_service - INFO - scan_folder:150 - 开始扫描文件夹: /tmp/tmp2rbjf_v4
+2026-10-05 14:34:41,907 - app.services.knowledge_base_service - INFO - scan_folder:187 - 已处理文件: /tmp/tmp2rbjf_v4/test.txt
+2026-10-05 14:34:41,907 - app.services.knowledge_base_service - INFO - scan_folder:202 - 扫描完成: {'total_files': 1, 'processed': 1, 'skipped': 0, 'errors': []}
+2026-10-05 14:34:41,908 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/knowledge-base/scan "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,909 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/knowledge-base/list "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,910 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/knowledge-base/1 "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,913 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,914 - app.services.knowledge_base_service - INFO - scan_folder:150 - 开始扫描文件夹: /tmp/tmpyfx0j8p7
+2026-10-05 14:34:41,915 - app.services.knowledge_base_service - INFO - scan_folder:187 - 已处理文件: /tmp/tmpyfx0j8p7/test.txt
+2026-10-05 14:34:41,915 - app.services.knowledge_base_service - INFO - scan_folder:202 - 扫描完成: {'total_files': 1, 'processed': 1, 'skipped': 0, 'errors': []}
+2026-10-05 14:34:41,915 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/knowledge-base/scan "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,916 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/knowledge-base/list "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,917 - app.services.knowledge_base_service - INFO - delete:295 - 已删除知识库条目: 1
+2026-10-05 14:34:41,918 - httpx - INFO - _send_single_request:1038 - HTTP Request: DELETE http://testserver/api/knowledge-base/1 "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,918 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/knowledge-base/list "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,922 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,923 - app.services.knowledge_base_service - INFO - scan_folder:150 - 开始扫描文件夹: /tmp/tmpwomwayxa
+2026-10-05 14:34:41,924 - app.services.knowledge_base_service - INFO - scan_folder:187 - 已处理文件: /tmp/tmpwomwayxa/test0.txt
+2026-10-05 14:34:41,924 - app.services.knowledge_base_service - INFO - scan_folder:187 - 已处理文件: /tmp/tmpwomwayxa/test1.txt
+2026-10-05 14:34:41,924 - app.services.knowledge_base_service - INFO - scan_folder:187 - 已处理文件: /tmp/tmpwomwayxa/test2.txt
+2026-10-05 14:34:41,925 - app.services.knowledge_base_service - INFO - scan_folder:202 - 扫描完成: {'total_files': 3, 'processed': 3, 'skipped': 0, 'errors': []}
+2026-10-05 14:34:41,925 - httpx - INFO - _send_single_request:1038 - HTTP Request: POST http://testserver/api/knowledge-base/scan "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,926 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/knowledge-base/list "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,927 - app.services.knowledge_base_service - INFO - clear_all:394 - 已清空知识库，共删除 3 条记录
+2026-10-05 14:34:41,927 - httpx - INFO - _send_single_request:1038 - HTTP Request: DELETE http://testserver/api/knowledge-base "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,928 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/knowledge-base/list "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,932 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,933 - httpx - INFO - _send_single_request:1038 - HTTP Request: DELETE http://testserver/api/knowledge-base/99999 "HTTP/1.1 404 Not Found"
+2026-10-05 14:34:41,937 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,939 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/logs "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,943 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,945 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/logs?article_id=1 "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,948 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,951 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/logs/1 "HTTP/1.1 200 OK"
+2026-10-05 14:34:41,955 - root - INFO - setup_logging:52 - 日志系统已初始化，模式: api, 日志文件: logs/api.log
+2026-10-05 14:34:41,956 - httpx - INFO - _send_single_request:1038 - HTTP Request: GET http://testserver/api/logs/99999 "HTTP/1.1 404 Not Found"
